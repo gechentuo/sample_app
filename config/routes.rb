@@ -1,13 +1,22 @@
 SampleApp::Application.routes.draw do
 
 
+  get "relationships/create"
+  get "relationships/destroy"
+  get "relationship/create"
+  get "relationship/destroy"
   get "microposts/index"
   get "microposts/destroy"
   get "microposts/create"
- resources :users
  resources :sessions, only: [:new, :create, :destroy]
  resources :microposts, only: [:create, :destroy]
+ resources :relationships, only: [:create, :destroy]
 
+ resources :users do
+  member do
+   get :following, :followers
+  end
+ end
 
  root to: 'static_pages#home'
  match '/help', to: 'static_pages#help', via: 'get'
